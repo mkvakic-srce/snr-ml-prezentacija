@@ -1,5 +1,6 @@
 ---
 title: "Aplikacije za strojno učenje na resursu Supek"
+subtitle: "bla bla"
 author: Sektor za napredno računanje
 date: 17. studenog 2023
 output: powerpoint_presentation
@@ -16,7 +17,7 @@ output: powerpoint_presentation
 - Primjeri
   - TensorFlow
   - PyTorch
-  - scikit-learn & Dask
+  - Scikit-learn & Dask
   - Ray
 
 # Strojno učenje na Supeku
@@ -103,3 +104,91 @@ run-singlenode.sh moja-skripta.py
 
 :::
 ::::::::::::::
+
+# Primjeri
+
+## Priprema
+
+:::::: {.columns}
+::: {.column width="50%"}
+- Primjeri
+  - TensorFlow & PyTorch
+  - Scikit-learn & Dask
+  - Ray Train & Tune
+- Priprema/git
+  - [mkvakic/snr-ml-primjeri](https://github.com/mkvakic-srce/snr-ml-primjeri)
+:::
+::: {.column width="50%"}
+
+```bash
+[korisnik@x3000c0s25b0n0 ~]$ git clone git@github.com:mkvakic-srce/snr-ml-primjeri.git
+Cloning into 'snr-ml-primjeri'...
+...
+
+[korisnik@x3000c0s25b0n0 ~]$ cd snr-ml-primjeri
+
+[mkvakic@x3000c0s25b0n0 snr-ml-primjeri]$ ls -1
+README.md
+...
+```
+:::
+::::::
+
+## TensorFlow
+
+:::::: {.columns}
+::: {.column width="50%"}
+- Zadano ponašanje
+    - 1 GPU
+- Distribuirani proračun
+    - korištenjem "strategija"
+    - kompilacija modela unutar djelokruga (*scopea*)
+- Strategije
+    - **`OneDeviceStrategy`**
+    - **`MirroredStrategy`**
+    - **`MultiWorkerMirroredStrategy`**
+:::
+::: {.column width="50%"}
+
+```python
+...
+layers = [tf.keras.Input(10),
+          tf.keras.layers.Dense(10),
+          tf.keras.layers.Softmax()]
+
+strategy = tf.distribute.MirroredStrategy()
+with strategy.scope():
+    model = tf.keras.Sequential(layers)
+    model.compile()
+
+model.fit(data)
+...
+```
+:::
+::::::
+
+## TensorFlow na jednom GPU procesoru
+
+```bash
+#PBS -q gpu
+#PBS -l ngpus=1
+
+module load scientific/tensorflow
+
+cd ${PBS_O_WORKDIR:-""}
+
+run-singlenode.sh tensorflow-singlegpu.py
+```
+
+## TensorFlow na više GPU procesora
+
+```bash
+#PBS -q gpu
+#PBS -l select=2:ngpus=1
+
+module load scientific/tensorflow
+
+cd ${PBS_O_WORKDIR:-""}
+
+run-multinode.sh tensorflow-strategy.py
+```
