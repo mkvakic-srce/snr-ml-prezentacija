@@ -1,5 +1,5 @@
 ---
-title: "Aplikacije za strojno učenje na resursu Supek"
+title: Aplikacije za strojno učenje na resursu Supek
 author: Sektor za napredno računanje
 date: 17. studenog 2023
 output: powerpoint_presentation
@@ -25,7 +25,7 @@ monofont: Consolas
 ## Aplikacije
 
 :::::::::::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 
 - NVIDIA NGC
     - kontejneri optimizari za izvođenje na GPU
@@ -41,7 +41,7 @@ monofont: Consolas
     - Lightning AI
 
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ![](images/ml.png)
 <!-- Trenutne aplikacije strojnog učenja -->
@@ -58,7 +58,7 @@ monofont: Consolas
 
 :::::: {.columns}
 
-::: {.column width="50%"}
+::: {.column}
 - Modulefiles
     - **`$IMAGE_PATH`** - definicija staze kontejnera
     - **`$PATH`** - dodavanje wrapper
@@ -70,15 +70,13 @@ monofont: Consolas
     - **`dask-launcher.sh`** - Dask klaster
 :::
 
-::: {.column width="50%" align=bottom}
-
+::: {.column}
 ```sh
 #PBS -l ngpus=1
 #PBS -l ncpus=8
 module load scientific/tensorflow
 run-singlenode.sh moja-skripta.py
 ```
-
 :::
 
 ::::::
@@ -86,7 +84,7 @@ run-singlenode.sh moja-skripta.py
 ## NCCL
 
 :::::::::::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 
 - ["Data parallel" problem](https://siboehm.com/articles/22/data-parallel-training)
     - Usklađivanje gradijenata na više procesora tijekom backpropa
@@ -97,7 +95,7 @@ run-singlenode.sh moja-skripta.py
     - Ring & Tree
 
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ![](images/nccl.png)
 <!-- Ring AllReduce algoritam (Figure 4. u [izvoru](https://www.uber.com/en-HR/blog/horovod/))-->
@@ -110,7 +108,7 @@ run-singlenode.sh moja-skripta.py
 ## Priprema
 
 :::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 - Primjeri
   - TensorFlow & PyTorch
   - Scikit-learn & Dask
@@ -118,7 +116,7 @@ run-singlenode.sh moja-skripta.py
 - Priprema/git
   - [mkvakic/snr-ml-primjeri](https://github.com/mkvakic-srce/snr-ml-primjeri)
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ```sh
 [korisnik@x3000c0s25b0n0 ~]$ git clone git@github.com:mkvakic-srce/snr-ml-primjeri.git
@@ -137,7 +135,7 @@ README.md
 ## TensorFlow
 
 :::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 - Zadano ponašanje
     - 1 GPU
 - Distribuirani proračun
@@ -148,7 +146,7 @@ README.md
     - **`MirroredStrategy`**
     - **`MultiWorkerMirroredStrategy`**
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ```python
 ...
@@ -196,7 +194,7 @@ run-multinode.sh tensorflow-strategy.py
 ## PyTorch
 
 :::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 - Ručno postavljanje na procese/rangove
 
 - `torchrun`
@@ -207,7 +205,7 @@ run-multinode.sh tensorflow-strategy.py
     - HuggingFace sučelje
     - viši nivo apstrakcije
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ```python
 ...
@@ -258,7 +256,7 @@ torchrun-multinode.sh pytorch-torchrun.py
 ## Dask
 
 :::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 - Namijenjeno paralelizaciji Python koda i distribuiranoj obradi OOM podataka
 - Razlaganje programa na jednostavne operacije korištenjem **dask** grafova
 - Komponenete
@@ -268,7 +266,7 @@ torchrun-multinode.sh pytorch-torchrun.py
     - `Delayed` - custom funkcije
     - `Futures` - eager `Delayed`
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ![](images/dask-architecture.png)
 <!-- Trenutne aplikacije strojnog učenja -->
@@ -328,7 +326,7 @@ dask-launcher.sh sklearn-dask-dask.py
 ## Ray
 
 :::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 - Originalno
     - Distribuirano ojačano učenje
 - Komponente
@@ -340,7 +338,7 @@ dask-launcher.sh sklearn-dask-dask.py
     - Actors - klase
     - Objects - varijable
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ![](images/ray-components.png)
 <!-- Ray komponente [izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq)-->
@@ -351,7 +349,7 @@ dask-launcher.sh sklearn-dask-dask.py
 ## Ray klaster
 
 :::::: {.columns}
-::: {.column width="50%"}
+::: {.column}
 - Head čvor
     - Driver - glavni program
     - Global Control Store - koordinacija klastera
@@ -362,7 +360,7 @@ dask-launcher.sh sklearn-dask-dask.py
     - Scheduler - raspoređivanje
     - Object Store - pohrana
 :::
-::: {.column width="50%"}
+::: {.column}
 
 ![](images/ray-cluster.png)
 <!-- Shema Ray klastera (Figure 2-3 u [izvoru](https://www.oreilly.com/library/view/learning-ray/9781098117214)) -->
