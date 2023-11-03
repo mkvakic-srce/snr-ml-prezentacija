@@ -43,7 +43,7 @@ monofont: Consolas
 :::
 ::: {.column}
 
-![](images/ml.png)
+![Slika 1: Trenutne aplikacije strojnog učenja](images/ml.png)
 <!-- Trenutne aplikacije strojnog učenja -->
 
 :::
@@ -51,7 +51,7 @@ monofont: Consolas
 
 ## Performanse - Resnet50
 
-![](images/ml-performance.png)
+![Slika 2: Brzina treniranja modela ResNet50 [img/sec] korištenjem PyTorcha (lijevo) i TensorFlowa (desno) na klasteru Supek (plavo) i Isabella (narančasto)](images/ml-performance.png)
 <!-- Brzina treniranja modela ResNet50 [img/sec] korištenjem PyTorcha (lijevo) i TensorFlowa (desno) na klasteru Supek (plavo) i Isabella (narančasto) -->
 
 ## Implementacija
@@ -97,7 +97,7 @@ run-singlenode.sh moja-skripta.py
 :::
 ::: {.column}
 
-![](images/nccl.png)
+![Slika 3: Ring AllReduce algoritam (*Figure 4.* u [izvoru](https://www.uber.com/en-HR/blog/horovod/))](images/nccl.png)
 <!-- Ring AllReduce algoritam (Figure 4. u [izvoru](https://www.uber.com/en-HR/blog/horovod/))-->
 
 :::
@@ -268,21 +268,21 @@ torchrun-multinode.sh pytorch-torchrun.py
 :::
 ::: {.column}
 
-![](images/dask-architecture.png)
-<!-- Trenutne aplikacije strojnog učenja -->
+![Slika 4: Shema aplikacije na klasteru Dask ([izvor](https://docs.dask.org/en/stable/#dask))](images/dask-architecture.png)
+<!-- Shema aplikacije na klasteru Dask ([izvor](https://docs.dask.org/en/stable/#dask)) -->
 
 :::
 ::::::
 
 ## Dask grafovi
 
-![](images/dask-graph.png){height=100px}
-<!-- Osnovni graf Dask ([Izvor](https://docs.dask.org/en/latest/graphs.html)) -->
+![Slika 5: Osnovni graf Dask ([izvor](https://docs.dask.org/en/latest/graphs.html))](images/dask-graph.png){height=100px}
+<!-- Osnovni graf Dask ([izvor](https://docs.dask.org/en/latest/graphs.html)) -->
 
 ## Dask OOM
 
-![](images/dask-oom.png){height=100px}
-<!-- Distribucija podataka na klasteru Dask u slučaju Dask Arraya [izvor](https://docs.dask.org/en/stable/array.html#design) -->
+![Slika 6: Distribucija podataka na klasteru Dask u slučaju Dask Arraya ([izvor](https://docs.dask.org/en/stable/array.html#design))](images/dask-oom.png){height=100px}
+<!-- Distribucija podataka na klasteru Dask u slučaju Dask Arraya ([izvor](https://docs.dask.org/en/stable/array.html#design)) -->
 
 ## Scikit-learn putem threadinga
 
@@ -340,8 +340,8 @@ dask-launcher.sh sklearn-dask-dask.py
 :::
 ::: {.column}
 
-![](images/ray-components.png)
-<!-- Ray komponente [izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq)-->
+![Slika 7: Ray komponente ([izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq))](images/ray-components.png)
+<!-- Ray komponente ([izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq))-->
 
 :::
 ::::::
@@ -362,7 +362,7 @@ dask-launcher.sh sklearn-dask-dask.py
 :::
 ::: {.column}
 
-![](images/ray-cluster.png)
+![Slika 8: Shema Ray klastera (*Figure 2-3* u [izvoru](https://www.oreilly.com/library/view/learning-ray/9781098117214))](images/ray-cluster.png)
 <!-- Shema Ray klastera (Figure 2-3 u [izvoru](https://www.oreilly.com/library/view/learning-ray/9781098117214)) -->
 
 :::
@@ -370,7 +370,7 @@ dask-launcher.sh sklearn-dask-dask.py
 
 ## Ray reference i izvođenje programa
 
-![Bla bla](images/ray-references.png)
+![Slika 9: Shema Ray posjedovanja i izvršavanja (*Ownership*, str. 8 u [izvoru](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit))](images/ray-references.png)
 <!--  Shema Ray posjedovanja i izvršavanja (Ownership, str. 8 u [izvoru](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit))-->
 
 ## Ray Train i PyTorch
