@@ -11,3 +11,6 @@ sed -i "s/NAZIV DOGAĐANJA/$(egrep '^title' presentation.md | sed 's/^title: //g
 
 # zip
 cd presentation/ && zip -q -r ../presentation.pptx *
+
+# rm
+rm -rf presentation/
