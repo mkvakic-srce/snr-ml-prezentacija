@@ -4,15 +4,15 @@ author: Sektor za napredno računanje
 date: 17. studenog 2023
 output: powerpoint_presentation
 monofont: Consolas
-
 ---
 
 ## Sadržaj
 
 - Strojno učenje na Supeku
   - Aplikacije i performanse
-  - Python i Lustre
   - Implementacija
+  - Python i Lustre
+  - NCCL
 
 - Primjeri
   - TensorFlow
@@ -26,7 +26,6 @@ monofont: Consolas
 
 :::::::::::::: {.columns}
 ::: {.column}
-
 - NVIDIA NGC
     - kontejneri optimizari za izvođenje na GPU
 - Trenutne
@@ -39,13 +38,10 @@ monofont: Consolas
     - Horovod
     - Rapids
     - Lightning AI
-
 :::
 ::: {.column}
-
 ![Slika 1: Trenutne aplikacije strojnog učenja](images/ml.png)
 <!-- Trenutne aplikacije strojnog učenja -->
-
 :::
 ::::::::::::::
 
@@ -57,7 +53,6 @@ monofont: Consolas
 ## Implementacija
 
 :::::: {.columns}
-
 ::: {.column}
 - Modulefiles
     - **`$IMAGE_PATH`** - definicija staze kontejnera
@@ -69,7 +64,6 @@ monofont: Consolas
     - **`torchrun-multinode.sh`** - PyTorch na više čvorova
     - **`dask-launcher.sh`** - Dask klaster
 :::
-
 ::: {.column}
 ```sh
 #PBS -l ngpus=1
@@ -78,14 +72,33 @@ module load scientific/tensorflow
 run-singlenode.sh moja-skripta.py
 ```
 :::
+::::::
 
+## Python i Lustre
+
+:::::: {.columns}
+::: {.column}
+- Lustre
+    - Paralelni raspodijeljeni datotečni sustav
+    - Virtualni zapis odvojen od fizičkog
+    - Metadata i Object Storage
+- Virtualna okruženja
+    - standardno riješenje za instalaciju
+    - `pip/conda install ...`
+- Tipične značajke
+    - 10000 direktorija
+    - 1000 datoteka
+    - 28 kbytea po datoteci
+:::
+::: {.column}
+![Slika 3: Performanse učitavanja 10GB podataka raspodijeljenih u 1-1000 direktorija i 1-1000 datoteka po direktoriju](images/lustre-venv.png)
+:::
 ::::::
 
 ## NCCL
 
 :::::::::::::: {.columns}
 ::: {.column}
-
 - ["Data parallel" problem](https://siboehm.com/articles/22/data-parallel-training)
     - Usklađivanje gradijenata na više procesora tijekom backpropa
 - NCCL
@@ -93,13 +106,10 @@ run-singlenode.sh moja-skripta.py
     - NVLink - 600GB/s
 - [AllReduce](https://marek.ai/allreduce-the-basis-of-multi-device-communication-for-neural-network-training.htm)
     - Ring & Tree
-
 :::
 ::: {.column}
-
-![Slika 3: Ring AllReduce algoritam (*Figure 4.* u [izvoru](https://www.uber.com/en-HR/blog/horovod/))](images/nccl.png)
+![Slika 4: Ring AllReduce algoritam (*Figure 4.* u [izvoru](https://www.uber.com/en-HR/blog/horovod/))](images/nccl.png)
 <!-- Ring AllReduce algoritam (Figure 4. u [izvoru](https://www.uber.com/en-HR/blog/horovod/))-->
-
 :::
 ::::::::::::::
 
@@ -117,7 +127,6 @@ run-singlenode.sh moja-skripta.py
   - [mkvakic/snr-ml-primjeri](https://github.com/mkvakic-srce/snr-ml-primjeri)
 :::
 ::: {.column}
-
 ```sh
 [korisnik@x3000c0s25b0n0 ~]$ git clone git@github.com:mkvakic-srce/snr-ml-primjeri.git
 Cloning into 'snr-ml-primjeri'...
@@ -147,7 +156,6 @@ README.md
     - **`MultiWorkerMirroredStrategy`**
 :::
 ::: {.column}
-
 ```python
 ...
 layers = [tf.keras.Input(10),
@@ -196,11 +204,9 @@ run-multinode.sh tensorflow-strategy.py
 :::::: {.columns}
 ::: {.column}
 - Ručno postavljanje na procese/rangove
-
 - `torchrun`
     - izvorno sučelje
     - implementacija slična MPI
-
 - `accelerate`
     - HuggingFace sučelje
     - viši nivo apstrakcije
@@ -223,7 +229,6 @@ for input, output in dataloader:
     optimizer.step()
 ...
 ```
-
 :::
 ::::::
 
@@ -267,21 +272,19 @@ torchrun-multinode.sh pytorch-torchrun.py
     - `Futures` - eager `Delayed`
 :::
 ::: {.column}
-
-![Slika 4: Shema aplikacije na klasteru Dask ([izvor](https://docs.dask.org/en/stable/#dask))](images/dask-architecture.png)
+![Slika 5: Shema aplikacije na klasteru Dask ([izvor](https://docs.dask.org/en/stable/#dask))](images/dask-architecture.png)
 <!-- Shema aplikacije na klasteru Dask ([izvor](https://docs.dask.org/en/stable/#dask)) -->
-
 :::
 ::::::
 
 ## Dask grafovi
 
-![Slika 5: Osnovni graf Dask ([izvor](https://docs.dask.org/en/latest/graphs.html))](images/dask-graph.png){height=100px}
+![Slika 6: Osnovni graf Dask ([izvor](https://docs.dask.org/en/latest/graphs.html))](images/dask-graph.png){height=100px}
 <!-- Osnovni graf Dask ([izvor](https://docs.dask.org/en/latest/graphs.html)) -->
 
 ## Dask OOM
 
-![Slika 6: Distribucija podataka na klasteru Dask u slučaju Dask Arraya ([izvor](https://docs.dask.org/en/stable/array.html#design))](images/dask-oom.png){height=100px}
+![Slika 7: Distribucija podataka na klasteru Dask u slučaju Dask Arraya ([izvor](https://docs.dask.org/en/stable/array.html#design))](images/dask-oom.png){height=100px}
 <!-- Distribucija podataka na klasteru Dask u slučaju Dask Arraya ([izvor](https://docs.dask.org/en/stable/array.html#design)) -->
 
 ## Scikit-learn putem threadinga
@@ -340,7 +343,7 @@ dask-launcher.sh sklearn-dask-dask.py
 :::
 ::: {.column}
 
-![Slika 7: Ray komponente ([izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq))](images/ray-components.png)
+![Slika 8: Ray komponente ([izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq))](images/ray-components.png)
 <!-- Ray komponente ([izvor](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit#heading=h.iyrm5j2gcdoq))-->
 
 :::
@@ -362,7 +365,7 @@ dask-launcher.sh sklearn-dask-dask.py
 :::
 ::: {.column}
 
-![Slika 8: Shema Ray klastera (*Figure 2-3* u [izvoru](https://www.oreilly.com/library/view/learning-ray/9781098117214))](images/ray-cluster.png)
+![Slika 9: Shema Ray klastera (*Figure 2-3* u [izvoru](https://www.oreilly.com/library/view/learning-ray/9781098117214))](images/ray-cluster.png)
 <!-- Shema Ray klastera (Figure 2-3 u [izvoru](https://www.oreilly.com/library/view/learning-ray/9781098117214)) -->
 
 :::
@@ -370,7 +373,7 @@ dask-launcher.sh sklearn-dask-dask.py
 
 ## Ray reference i izvođenje programa
 
-![Slika 9: Shema Ray posjedovanja i izvršavanja (*Ownership*, str. 8 u [izvoru](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit))](images/ray-references.png)
+![Slika 10: Shema Ray posjedovanja i izvršavanja (*Ownership*, str. 8 u [izvoru](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit))](images/ray-references.png)
 <!--  Shema Ray posjedovanja i izvršavanja (Ownership, str. 8 u [izvoru](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/edit))-->
 
 ## Ray Train i PyTorch
