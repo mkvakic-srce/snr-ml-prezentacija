@@ -115,7 +115,7 @@ README.md
 
 ## Kontejneri na Supeku - interaktivna izgradnja
 
-<!-- terminal.png snr-apptainer-primjeri/basic/create.md -->
+<!-- snr-apptainer-primjeri/basic/create.md -->
 ```sh
    
 # spoji se na login GPU
@@ -144,7 +144,7 @@ mv ubuntu-22.04.sif ${HOME}/.
 
 ## Kontejneri na Supeku - izvšavanje putem skripte PBS
 
-<!-- terminal.png snr-apptainer-primjeri/basic/run.sh -->
+<!-- snr-apptainer-primjeri/basic/run.sh -->
 ```sh
 #PBS -q cpu-radionica
 #PBS -l ncpus=1
@@ -156,7 +156,7 @@ apptainer exec ${HOME}/ubuntu-22.04.sif python3 run.py
 
 ## Kontejneri na Supeku - izvšavanje na GPU
 
-<!-- terminal.png snr-apptainer-primjeri/basic/gpu.sh -->
+<!-- snr-apptainer-primjeri/basic/gpu.sh -->
 ```sh
 #PBS -q gpu-radionica
 #PBS -l ngpus=1
@@ -212,7 +212,7 @@ apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
 
 ## MPI - hybrid kontejner
 
-<!-- terminal.png snr-apptainer-primjeri/mpi/hybrid.* -->
+<!-- snr-apptainer-primjeri/mpi/hybrid.* -->
 ```sh
  
 # izgradi kontejner
@@ -228,7 +228,7 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 
 ## MPI - bind kontejner
 
-<!-- terminal.png snr-apptainer-primjeri/mpi/bind.* -->
+<!-- snr-apptainer-primjeri/mpi/bind.* -->
 ```sh
  
 # izgradi kontejner
