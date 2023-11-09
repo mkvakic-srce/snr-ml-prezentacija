@@ -62,7 +62,7 @@ monofont: Consolas
 
 ## Kontejneri i HPC
 
-- Zašto ne Docker? (barem u 2017...)
+- Zašto ne Docker? (barem ne u 2017...)
     - iziskuje povišene "root" ovlasti
     - iziskuje dodatne servise ili "docker daemon"
     - nema integraciju sa sustavima za podnošenje poslova
@@ -101,6 +101,8 @@ README.md
 :::
 ::::::
 
+# Kontejneri na Supeku
+
 ## Kontejneri na Supeku
 
 - Primjeri
@@ -115,7 +117,7 @@ README.md
 
 <!-- terminal.png snr-apptainer-primjeri/basic/create.md -->
 ```sh
-  
+   
 # spoji se na login GPU
 ssh korisnik@login-gpu.hpc.srce.hr
   
@@ -140,6 +142,32 @@ mv ubuntu-22.04.sif ${HOME}/.
  
 ```
 
+## Kontejneri na Supeku - izvšavanje putem skripte PBS
+
+<!-- terminal.png snr-apptainer-primjeri/basic/run.sh -->
+```sh
+#PBS -q cpu-radionica
+#PBS -l ncpus=1
+ 
+cd ${PBS_O_WORKDIR:-""}
+ 
+apptainer exec ${HOME}/ubuntu-22.04.sif python3 run.py
+```
+
+## Kontejneri na Supeku - izvšavanje na GPU
+
+<!-- terminal.png snr-apptainer-primjeri/basic/gpu.sh -->
+```sh
+#PBS -q gpu-radionica
+#PBS -l ngpus=1
+ 
+cd ${PBS_O_WORKDIR:-""}
+ 
+apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
+```
+
+# "Po narudžbi"
+
 ## "Po narudžbi"
 
 :::::: {.columns}
@@ -157,6 +185,8 @@ mv ubuntu-22.04.sif ${HOME}/.
 ![Slika x Docker Hub](images/docker-hub.png)
 :::
 ::::::
+
+# MPI
 
 ## MPI
 
@@ -211,5 +241,7 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 104422.x3000c0s25b0n0.hsn.hpc.srce.hr
  
 ```
+
+# Squashfs
 
 ## Squashfs
