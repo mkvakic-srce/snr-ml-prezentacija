@@ -48,7 +48,6 @@ monofont: Consolas
 - Kontejneri
     - efikasnija i brža od tipične putem "hipervizora"
     - "lightweight" virtualizacija na razini OS-a
-    - oslanjanje na jezgru OS
 
 - Docker
     - danas svepristuno rješenje
@@ -62,7 +61,7 @@ monofont: Consolas
 
 ## Kontejneri i HPC
 
-- Zašto ne Docker? (barem ne u 2017...)
+- Zašto ne Docker? (barem u 2017...)
     - iziskuje povišene "root" ovlasti
     - iziskuje dodatne servise ili "docker daemon"
     - nema integraciju sa sustavima za podnošenje poslova
