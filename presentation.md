@@ -171,6 +171,10 @@ apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
 
 :::::: {.columns}
 ::: {.column}
+- Primjeri
+    - Izgradnja condom
+    - Izgradnja repozitorijem NGC
+    - Izgradnja CRAN-om
 - Instalacija ovisnosti upraviteljima knjižnica
     - **`apt/yum install ...`**
     - **`conda/pip install ...`**
@@ -184,6 +188,49 @@ apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
 ![Slika x Docker Hub](images/docker-hub.png)
 :::
 ::::::
+
+## "Po narudžbi" - conda
+
+<!-- snr-apptainer-primjeri/custom/conda.* -->
+```sh
+ 
+# napravi kontejner
+apptainer build conda.sif conda.def
+ 
+# pripremi jezični model
+apptainer run conda.sif gpt2-prepare.py
+ 
+# podnesi posao
+qsub conda.sh
+ 
+```
+
+## "Po narudžbi" - NGC
+
+<!-- snr-apptainer-primjeri/custom/ngc.sh -->
+```sh
+ 
+#PBS -q gpu-radionica
+#PBS -l ngpus=1
+ 
+cd ${PBS_O_WORKDIR:-""}
+ 
+apptainer run --nv ngc.sif gpt2.py
+ 
+```
+
+## "Po narudžbi" - CRAN
+
+<!-- snr-apptainer-primjeri/custom/r-base.* -->
+```sh
+ 
+# napravi kontejner
+apptainer build r-base.sif r-base.def
+ 
+# podnesi posao
+qsub r-base.sh
+ 
+```
 
 # MPI
 
