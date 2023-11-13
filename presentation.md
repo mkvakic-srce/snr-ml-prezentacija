@@ -99,27 +99,47 @@ monofont: Consolas
 
 ![Slika x Singularity flow ([izvor](https://docs.sylabs.io/guides/2.5/user-guide/singularity_flow.html))](images/singulairty-flow.png)
 
-## Apptainer - Komande
+## Apptainer - Izgradnja
 
 - **`apptainer build ...`**
-    - izgradnja kontejnera
-    - korištenjem online repozitorija ili recepata
-    - prebacivanje iz jednog formata u drugi
+    - izgradnja i prebacivanje iz jednog u drugi format
+- Formati
+    1. **image** ili 'read-only' slika za izvršavanje
+    1. **sandbox** ili 'read-write' direktorij za uređivanje
+- Izvori
+    - online repozitoriji u obliku **`docker://[URI]`**
+    - definicijske datoteke
+    - sandbox direktoriji
+
+## Apptainer - Definicijske datoteke
+
+- Recepti za izgradnju
+    1. zaglavlje
+    1. odjeljci
+- Zaglavlje
+    - Izvor i osnovni OS
+- Odjeljci
+    - **`%files`** - kopiranje datoteka u kontejner
+    - **`%environment`** - postavljanje okoline tijekom izvršavanja
+    - **`%post`** - naredbe za izvršavanje nakon izgradnje osnove
+    - **`%runscript`** - zadana naredba pri izvršavanju kontejnera
+
+## Apptainer - Izvršavanje
+
+- **`apptainer exec/run ...`**
+    - **`exec`** - izvršavanje komanda u kontejneru
+    - **`run`** - izvršavanje samog kontejnera
+- Bitniji argumenti
+    - **`--bind`** - spajanje direktorija u kontejner
+    - **`--nv`** - omogućavanje GPU podrške
+
+## Apptainer - Interaktivno
+
 - **`apptainer shell ...`**
-    - interaktivna sjednica u kontejneru
-    - razvoj kontejnera uživo
-- **`apptainer exec ...`**
-    - izvršavanje komande u kontejneru
-- **`apptainer run ...`**
-    - izvršavanje kontejnera
-
-## Apptainer - Argumenti
-
-- **`build --sandbox`**
-    - izgradnja kontejnera za pisanje u obliku direktorija
-- **`shell --writable --fakeroot`**
-    - 
-- **`run/exec --nv`**
+    - otvori interaktivnu sjednicu unutar kontejnera
+- Bitniji argumenti
+    - **`--writable`** - upisivanje u kontejner
+    - **`--fakeroot`** - izvršavanje unutar kontejnera kao root 
 
 # Primjeri
 
