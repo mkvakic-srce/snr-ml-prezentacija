@@ -12,7 +12,6 @@ monofont: Consolas
 - Kontejneri na resursima za napredno računanje
     - Kontejneri
     - Apptainer
-    - Osnove interakcije
 - Primjeri
     - Kontejneri na Supeku
     - "Po narudžbi"
@@ -38,7 +37,7 @@ monofont: Consolas
 :::
 ::::::
 
-## Kontejneri i virtualizacija
+## Kontejneri - virtualizacija
 
 - Virtualizacija
     - podjela fizičkih računarskih resursa u više neovisnih putem *hipervizora*
@@ -55,11 +54,22 @@ monofont: Consolas
         - *cgroups* - ograničavanje resursa
         - *namespace* - izolacija od domaćina
 
-## Kontejneri i virtualizacija
+## Kontejneri - virtualizacija
 
-![Slika x VM vs. kontejner ([izvor](https://ieeexplore.ieee.org/document/8950983))](images/vm-container.png)
+![Slika x VM vs. kontejner (prilagođeno iz *Fig. 1* u [izvoru](https://ieeexplore.ieee.org/document/8950983))](images/vm-container.png)
 
-## Kontejneri i HPC
+## Kontejneri - Zašto?
+
+1. Lakši razvoj okoline
+    - u "potpunoj" kontroli korisnika
+1. Prenosivost
+    - mogućnost izvršavanja na sličnim sustavima
+1. Dijeljenje i ponovljivost (eng. *reproducibility*)
+    - recepti koje bilo tko može koristiti
+1. Performanse
+    - Linux aplikacija kao i sve ostale
+
+## Kontejneri - HPC
 
 - Zašto ne Docker? (barem u 2017...)
     - iziskuje povišene "root" ovlasti
@@ -69,7 +79,47 @@ monofont: Consolas
 
 ## Apptainer
 
-## Osnove interakcije
+:::::: {.columns}
+::: {.column}
+- Kontejeri prilagođeni HPC-u
+    - originalno projekt Singularity (2015. - )
+- Značajke
+    - zadržavanje korisničkih ovlasti
+    - prenosiva slika
+    - kompatibilnost s Dockerom
+    - integracija sa sustavima PBS, SGE, Slurm...
+    - podrška za aplikacije MPI i GPU
+:::
+::: {.column}
+![Slika x Apptainer logo](images/apptainer.jpg)
+:::
+::::::
+
+## Apptainer - Workflow
+
+![Slika x Singularity flow ([izvor](https://docs.sylabs.io/guides/2.5/user-guide/singularity_flow.html))](images/singulairty-flow.png)
+
+## Apptainer - Komande
+
+- **`apptainer build ...`**
+    - izgradnja kontejnera
+    - korištenjem online repozitorija ili recepata
+    - prebacivanje iz jednog formata u drugi
+- **`apptainer shell ...`**
+    - interaktivna sjednica u kontejneru
+    - razvoj kontejnera uživo
+- **`apptainer exec ...`**
+    - izvršavanje komande u kontejneru
+- **`apptainer run ...`**
+    - izvršavanje kontejnera
+
+## Apptainer - Argumenti
+
+- **`build --sandbox`**
+    - izgradnja kontejnera za pisanje u obliku direktorija
+- **`shell --writable --fakeroot`**
+    - 
+- **`run/exec --nv`**
 
 # Primjeri
 
@@ -241,12 +291,12 @@ qsub r-base.sh
 - Dva načina
     - **`hybrid`** - MPI unutar kontejnera
     - **`bind`** - MPI izvan kontejnera
-- Cray
+- Cray MPI
     - **`cray-pals`** - PBS na Crayu
     - **`cray-pmi`** - MPICH na PALS-u
     - **`cray-mpich-abi`** - implementacija MPI
     - **`libfabric`** - MPI na Slingshotu
-- **`bind`**
+- **`"bind"`** model na Supeku
     - RHEL 8 kompatibilan OS
 :::
 ::: {.column}
@@ -276,12 +326,12 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 
 <!-- snr-apptainer-primjeri/mpi/bind.* -->
 ```sh
- 
+  
 # izgradi kontejner
 [korisnik@x3000c0s25b0n0 ~]$ apptainer build bind.sif bind.def
 INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 ...
- 
+  
 # podnesi posao
 [korisnik@x3000c0s25b0n0 ~]$ qsub bind.sh
 104422.x3000c0s25b0n0.hsn.hpc.srce.hr
@@ -291,3 +341,41 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 # Squashfs
 
 ## Squashfs
+
+:::::: {.columns}
+::: {.column}
+- Squashfs
+    - komprimiran "read only" blok podataka
+- **`mksquashfs`**
+    - alat za upravljanje
+- MNIST
+    - Velika količina malih podataka
+    - 28 x 28 pixela
+    - 60000 slika od 303 bytea
+:::
+::: {.column}
+![Slika x Uzorak slika MNIST ([izvor](https://en.wikipedia.org/wiki/MNIST_database))](images/mnist.png)
+:::
+::::::
+
+## Squashfs
+
+<!-- snr-apptainer-primjeri/squashfs -->
+```sh
+ 
+# download
+wget -nc https://github.com/myleott/mnist_png/raw/master/mnist_png.tar.gz
+
+# untar
+tar xvf mnist_png.tar.gz
+
+# pretvori direktorij u sliku
+mksquashfs mnist_png/ mnist_png.sqsh
+ 
+# učitaj podatke spojene '--bind' argumentom
+apptainer exec \
+    --bind mnist_png.sqsh:/mnist_png:image-src=/ \
+    ${HOME}/ubuntu-22.04.sif \
+    python read.py
+ 
+```
