@@ -215,7 +215,7 @@ mv ubuntu-22.04.sif ${HOME}/.
  
 ```
 
-## Kontejneri na Supeku - izvšavanje putem skripte PBS
+## Kontejneri na Supeku - izvršavanje putem skripte PBS
 
 <!-- snr-apptainer-primjeri/basic/run.sh -->
 ```sh
@@ -228,7 +228,7 @@ cd ${PBS_O_WORKDIR:-""}
 apptainer exec ${HOME}/ubuntu-22.04.sif python3 run.py
 ```
 
-## Kontejneri na Supeku - izvšavanje na GPU
+## Kontejneri na Supeku - izvršavanje na GPU
 
 <!-- snr-apptainer-primjeri/basic/gpu.sh -->
 ```sh
@@ -283,15 +283,14 @@ qsub conda.sh
 
 ## "Po narudžbi" - NGC
 
-<!-- snr-apptainer-primjeri/custom/ngc.sh -->
+<!-- snr-apptainer-primjeri/custom/ngc.* -->
 ```sh
   
-#PBS -q gpu-radionica
-#PBS -l ngpus=1
+# napravi kontejner
+apptainer build ngc.sif ngc.def
   
-cd ${PBS_O_WORKDIR:-""}
-  
-apptainer run --nv ngc.sif gpt2.py
+# podnesi posao
+qsub ngc.sh
   
 ```
 
@@ -338,13 +337,10 @@ qsub r-base.sh
 ```sh
   
 # izgradi kontejner
-[korisnik@x3000c0s25b0n0 ~]$ apptainer build hybrid.sif hybrid.def
-INFO:    User not listed in /etc/subuid, trying root-mapped namespace
-...
+apptainer build hybrid.sif hybrid.def
   
 # podnesi posao
-[korisnik@x3000c0s25b0n0 ~]$ qsub hybrid.sh
-104421.x3000c0s25b0n0.hsn.hpc.srce.hr
+qsub hybrid.sh
   
 ```
 
@@ -354,13 +350,10 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 ```sh
    
 # izgradi kontejner
-[korisnik@x3000c0s25b0n0 ~]$ apptainer build bind.sif bind.def
-INFO:    User not listed in /etc/subuid, trying root-mapped namespace
-...
+apptainer build bind.sif bind.def
    
 # podnesi posao
-[korisnik@x3000c0s25b0n0 ~]$ qsub bind.sh
-104422.x3000c0s25b0n0.hsn.hpc.srce.hr
+qsub bind.sh
   
 ```
 
