@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # pandoc
-pandoc presentation.md -o presentation.pptx --reference-doc template/srce-predlozak-16x9-OA-CC-BY-SA-2023-EN.PPTX
+pandoc presentation.md -o presentation.pptx --reference-doc template/srce-predlozak-16x9-OA-CC-BY-SA-2023-HR-edited.pptx
 
 # unzip
 unzip -q -o -d presentation/ presentation.pptx
