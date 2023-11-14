@@ -1,7 +1,7 @@
 ---
 title: Korištenje kontejnera na resursima za napredno računanje
 author: Sektor za napredno računanje
-date: 16. studenog 2023
+date: 16. studenog 2023.
 output: powerpoint_presentation
 monofont: Consolas
 
@@ -12,6 +12,7 @@ monofont: Consolas
 - Kontejneri na resursima za napredno računanje
     - Kontejneri
     - Apptainer
+
 - Primjeri
     - Kontejneri na Supeku
     - "Po narudžbi"
@@ -31,9 +32,11 @@ monofont: Consolas
     - *Standardna jedinica softvera koja pakira kod i sve njegove
        ovisnosti tako da aplikacija radi brzo i pouzdano iz jednog računalnog
        okruženja u drugo.*
+- Njihova glavna značajka?
+    - **Prenosivost**
 :::
 ::: {.column}
-![Slika x Kontejner ([izvor](https://upload.wikimedia.org/wikipedia/commons/d/df/Container_01_KMJ.jpg))](images/container.jpg)
+![Slika 1 Kontejner ([izvor](https://upload.wikimedia.org/wikipedia/commons/d/df/Container_01_KMJ.jpg))](images/container.jpg)
 :::
 ::::::
 
@@ -56,14 +59,14 @@ monofont: Consolas
 
 ## Kontejneri - virtualizacija
 
-![Slika x VM vs. kontejner (prilagođeno iz *Fig. 1* u [izvoru](https://ieeexplore.ieee.org/document/8950983))](images/vm-container.png)
+![Slika 2 VM vs. kontejner (prilagođeno iz *Fig. 1* u [izvoru](https://ieeexplore.ieee.org/document/8950983))](images/vm-container.png)
 
 ## Kontejneri - Zašto?
 
-1. Lakši razvoj okoline
-    - u "potpunoj" kontroli korisnika
 1. Prenosivost
     - mogućnost izvršavanja na sličnim sustavima
+1. Lakši razvoj okoline
+    - u "potpunoj" kontroli korisnika
 1. Dijeljenje i ponovljivost (eng. *reproducibility*)
     - recepti koje bilo tko može koristiti
 1. Performanse
@@ -91,13 +94,13 @@ monofont: Consolas
     - podrška za aplikacije MPI i GPU
 :::
 ::: {.column}
-![Slika x Apptainer logo](images/apptainer.jpg)
+![Slika 3 Apptainer logo](images/apptainer.jpg)
 :::
 ::::::
 
 ## Apptainer - Workflow
 
-![Slika x Singularity flow ([izvor](https://docs.sylabs.io/guides/2.5/user-guide/singularity_flow.html))](images/singulairty-flow.png)
+![Slika 4 Singularity flow ([izvor](https://docs.sylabs.io/guides/2.5/user-guide/singularity_flow.html))](images/singulairty-flow.png)
 
 ## Apptainer - Izgradnja
 
@@ -157,15 +160,16 @@ monofont: Consolas
 :::
 ::: {.column}
 ```sh
-[korisnik@x3000c0s25b0n0 ~]$ git clone git@github.com:mkvakic-srce/snr-apptainer-primjeri.git
-Cloning into 'snr-apptainer-primjeri'...
-...
- 
-[korisnik@x3000c0s25b0n0 ~]$ cd snr-apptainer-primjeri
- 
-[korisnik@x3000c0s25b0n0 snr-apptainer-primjeri]$ ls -1
-README.md
-...
+  
+# ssh na pristupni čvor GPU
+ssh korisnik@login-gpu.hpc.srce.hr
+  
+# git clone
+git clone git@github.com:mkvakic-srce/snr-apptainer-primjeri.git
+  
+# cd
+cd snr-apptainer-primjeri
+  
 ```
 :::
 ::::::
@@ -215,11 +219,12 @@ mv ubuntu-22.04.sif ${HOME}/.
 
 <!-- snr-apptainer-primjeri/basic/run.sh -->
 ```sh
+ 
 #PBS -q cpu-radionica
 #PBS -l ncpus=1
- 
+  
 cd ${PBS_O_WORKDIR:-""}
- 
+  
 apptainer exec ${HOME}/ubuntu-22.04.sif python3 run.py
 ```
 
@@ -227,11 +232,12 @@ apptainer exec ${HOME}/ubuntu-22.04.sif python3 run.py
 
 <!-- snr-apptainer-primjeri/basic/gpu.sh -->
 ```sh
+ 
 #PBS -q gpu-radionica
 #PBS -l ngpus=1
- 
+  
 cd ${PBS_O_WORKDIR:-""}
- 
+  
 apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
 ```
 
@@ -255,7 +261,7 @@ apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
     - BioContainers - kontejneri namijenjeni bioinformatici
 :::
 ::: {.column}
-![Slika x Docker Hub](images/docker-hub.png)
+![Slika 5 Docker Hub](images/docker-hub.png)
 :::
 ::::::
 
@@ -263,43 +269,43 @@ apptainer exec --nv ${HOME}/ubuntu-22.04.sif python3 gpu.py
 
 <!-- snr-apptainer-primjeri/custom/conda.* -->
 ```sh
- 
+  
 # napravi kontejner
 apptainer build conda.sif conda.def
- 
+  
 # pripremi jezični model
 apptainer run conda.sif gpt2-prepare.py
- 
+  
 # podnesi posao
 qsub conda.sh
- 
+  
 ```
 
 ## "Po narudžbi" - NGC
 
 <!-- snr-apptainer-primjeri/custom/ngc.sh -->
 ```sh
- 
+  
 #PBS -q gpu-radionica
 #PBS -l ngpus=1
- 
+  
 cd ${PBS_O_WORKDIR:-""}
- 
+  
 apptainer run --nv ngc.sif gpt2.py
- 
+  
 ```
 
 ## "Po narudžbi" - CRAN
 
 <!-- snr-apptainer-primjeri/custom/r-base.* -->
 ```sh
- 
+  
 # napravi kontejner
 apptainer build r-base.sif r-base.def
- 
+  
 # podnesi posao
 qsub r-base.sh
- 
+  
 ```
 
 # MPI
@@ -321,7 +327,7 @@ qsub r-base.sh
 :::
 ::: {.column}
 
-![Slika x Bind način spajanja kontejnera ([izvor](https://ieeexplore.ieee.org/document/8950983))](images/mpi-bind.png)
+![Slika 6 Bind način spajanja kontejnera ([izvor](https://ieeexplore.ieee.org/document/8950983))](images/mpi-bind.png)
 
 :::
 ::::::
@@ -330,32 +336,32 @@ qsub r-base.sh
 
 <!-- snr-apptainer-primjeri/mpi/hybrid.* -->
 ```sh
- 
+  
 # izgradi kontejner
 [korisnik@x3000c0s25b0n0 ~]$ apptainer build hybrid.sif hybrid.def
 INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 ...
- 
+  
 # podnesi posao
 [korisnik@x3000c0s25b0n0 ~]$ qsub hybrid.sh
 104421.x3000c0s25b0n0.hsn.hpc.srce.hr
- 
+  
 ```
 
 ## MPI - bind kontejner
 
 <!-- snr-apptainer-primjeri/mpi/bind.* -->
 ```sh
-  
+   
 # izgradi kontejner
 [korisnik@x3000c0s25b0n0 ~]$ apptainer build bind.sif bind.def
 INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 ...
-  
+   
 # podnesi posao
 [korisnik@x3000c0s25b0n0 ~]$ qsub bind.sh
 104422.x3000c0s25b0n0.hsn.hpc.srce.hr
- 
+  
 ```
 
 # Squashfs
@@ -374,7 +380,7 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
     - 60000 slika od 303 bytea
 :::
 ::: {.column}
-![Slika x Uzorak slika MNIST ([izvor](https://en.wikipedia.org/wiki/MNIST_database))](images/mnist.png)
+![Slika 7 Uzorak slika MNIST ([izvor](https://en.wikipedia.org/wiki/MNIST_database))](images/mnist.png)
 :::
 ::::::
 
@@ -382,20 +388,20 @@ INFO:    User not listed in /etc/subuid, trying root-mapped namespace
 
 <!-- snr-apptainer-primjeri/squashfs -->
 ```sh
- 
+  
 # download
 wget -nc https://github.com/myleott/mnist_png/raw/master/mnist_png.tar.gz
-
+ 
 # untar
 tar xvf mnist_png.tar.gz
-
+ 
 # pretvori direktorij u sliku
 mksquashfs mnist_png/ mnist_png.sqsh
- 
+  
 # učitaj podatke spojene '--bind' argumentom
 apptainer exec \
     --bind mnist_png.sqsh:/mnist_png:image-src=/ \
     ${HOME}/ubuntu-22.04.sif \
     python read.py
- 
+  
 ```
